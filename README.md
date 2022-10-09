@@ -17,7 +17,7 @@ termination: Termination of the program is done with Control+C
 	
 The main entities of this part are the listener, the manager and the worker.
 	
-#0d1117 **Listener**
+`#0d1117` **Listener**
 The Listener observes the input/ folder for newly created or moved files and receives the name of each file for which it informs the manager via pipe.
 	
 **Manager**	
