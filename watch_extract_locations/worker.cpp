@@ -4,6 +4,8 @@
 #include <map> 
 #include <signal.h>
 #include "string_process.h"
+#include <cstdlib>
+#include <cstdio>
 
 #define PERMS 0666 // set access permissions
 #define BUFSIZE 512 //for msgbuf

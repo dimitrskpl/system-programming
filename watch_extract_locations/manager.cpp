@@ -8,7 +8,10 @@
 #include <map>    
 #include "worker.h" 
 #include "string_process.h"
- 
+#include <cerrno>
+#include <cstdlib>
+#include <iostream>
+
 #define READ 0 //for pipe
 #define WRITE 1 //for pipe
 #define BUFFSIZE 2048 //assume that 2048 bytes is an upper bound of characters read from inotify each time 
@@ -51,9 +54,37 @@ static map<pid_t, char*> worker_fifo_map; //map worker to a unique fifo name
 //default exit value from manager for handler on success, else 1
 static int success = 0; 
 
-int main(){
-    char path_in[] = "../input/"; //path where listener looks at for new files 
-    char path_out[] = "../output/"; //path where worker creates file.out and writes results 
+int main(int argc, char *argv[]){
+    char *path_in = nullptr;  // for path where listener looks at for new files 
+    char *path_out = nullptr; //for path where worker creates file.out and writes results 
+
+    for(int i = 1; i < argc; i++) {
+        if(strcmp(argv[i], "-i") == 0) {
+            if(i + 1 < argc) { 
+                path_in = argv[i + 1];
+                i++; 
+            } else {
+                std::cerr << "Option -i requires an argument." << std::endl;
+                return 1;
+            }
+        } else if(strcmp(argv[i], "-o") == 0) {
+            if(i + 1 < argc) { 
+                path_out = argv[i + 1];
+                i++; 
+            } else {
+                std::cerr << "Option -o requires an argument." << std::endl;
+                return 1;
+            }
+        }
+    }
+
+    if(path_in == nullptr || path_out == nullptr) {
+        std::cerr << "Usage: " << argv[0] << " -i <input_path> -o <output_path>" << std::endl;
+        return 1; 
+    }
+
+    std::cout << "Input Path: " << path_in << std::endl;
+    std::cout << "Output Path: " << path_out << std::endl;
 
 
     static struct sigaction act_sigint;

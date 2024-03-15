@@ -34,8 +34,8 @@ string_process.o: string_process.cpp
 clean:
 	rm -f $(OBJS) $(EXEC)
 
-run: $(EXEC)
-	./$(EXEC)
+# run: $(EXEC)
+# 	./$(EXEC)
 
 #clean file *.txt inserted in INPUT folder
 clean_input_txt:

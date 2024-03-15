@@ -1,7 +1,9 @@
 #include <unistd.h>
 #include <string.h>
 #include "string_process.h"
-  
+#include <cstdio>
+#include <cstdlib>
+
 using namespace std;
 
 void find_loc(const char* str, char** loc){
